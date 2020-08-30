@@ -1,0 +1,12 @@
+---
+- block:
+  - lineinfile:
+      dest: /etc/sysconfig/network-scripts/ifcfg-{{ item }}
+      backup: no
+      regexp: "^MTU="
+      line: "MTU=9000"
+      state: present
+#  - name: Set mtu interface online
+  - shell: /usr/sbin/ifconfig {{ item }} mtu 9000
+  when:
+   - hostvars[inventory_hostname]['ansible_'+item]['mtu'] != 9000

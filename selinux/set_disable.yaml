@@ -1,0 +1,32 @@
+---
+- name: Set selinux
+  hosts: all
+  serial: 0
+#  remote_user: adm_onlanta
+#  become: true
+#  become_method: sudo
+
+  tasks:
+
+  - name: Test to see if selinux is running
+    command: sestatus
+    register: sestatus
+
+#  - name: Install the libselinux-python package
+#    yum:
+#      name: libselinux-python
+#      state: present
+#      update_cache: true
+#    when: '"enabled" in sestatus.stdout'
+
+  - block:
+    - name: Set disabled if selinux file
+      raw: sed -i 's/^\(SELINUX=\).*$/\1disabled/' /etc/selinux/config
+      args:
+        executable: /bin/bash
+
+    - name: Reboot a machine
+      reboot:
+        reboot_timeout: 3600
+    when: '"enabled" in sestatus.stdout'
+

@@ -1,0 +1,16 @@
+---
+- name: Query NTP stats
+  hosts: all
+  serial: 0
+#  remote_user: adm_onlanta
+#  become: true
+#  become_method: sudo
+
+  tasks:
+
+    - name: Ntpstat result
+      command: ntpstat
+      register: ntpstat
+
+    - debug:
+        msg: "{{ ntpstat.stdout | regex_search('(.*(10\\.135\\.35\\.\\d+).*)') }}"

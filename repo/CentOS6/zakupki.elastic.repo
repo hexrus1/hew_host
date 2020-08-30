@@ -1,0 +1,5 @@
+[zakupki_elastic_repo]
+name=EIS Elastic Local Repository
+baseurl=http://repo/elk/rpms/
+enabled=1
+gpgcheck=0

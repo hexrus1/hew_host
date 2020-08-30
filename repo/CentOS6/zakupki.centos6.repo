@@ -1,0 +1,18 @@
+[zakupki_centos6_base]
+name=EIS CentOS 6 Base Local Repository
+baseurl=http://repo/centos/6/os/x86_64/
+enabled=1
+gpgcheck=0
+
+[zakupki_centos6_updates]
+name=EIS CentOS 6 Updates Local Repository
+baseurl=http://repo/centos/6/updates/x86_64/
+enabled=1
+gpgcheck=0
+
+[zakupki_epel6_repo]
+name=EIS EPEL 6 Local Repository
+baseurl=http://repo/epel/epel6
+enabled=1
+gpgcheck=0
+

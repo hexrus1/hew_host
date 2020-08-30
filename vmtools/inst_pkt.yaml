@@ -1,0 +1,21 @@
+---
+- name: Install yum packet
+  hosts: all
+  serial: 0
+#  remote_user: adm_onlanta
+#  become: true
+#  become_method: sudo
+
+  tasks:
+
+    - name: Install vmtools
+      yum: 
+        name: "open-vm-tools" 
+        state: "installed"
+      register: yum_result
+
+    - block:
+      - name: Reboot a machine
+        reboot:
+          reboot_timeout: 3600
+      when: yum_result.changed is true

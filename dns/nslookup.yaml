@@ -1,0 +1,24 @@
+---
+- name: Set DNS servers
+  hosts: all
+  serial: 0
+#  remote_user: adm_onlanta
+#  become: true
+#  become_method: sudo
+
+  tasks:
+
+    - name: Get physical interfaces names
+      command: find /sys/class/net -type l -not -lname '*virtual*' -printf '%f\n'
+      register: physical_interfaces_cmd
+      changed_when: false
+      check_mode: false
+
+    - name: Delete DNS lines
+      include_tasks: change_ifcfg.yml
+      with_items: "{{ physical_interfaces_cmd.stdout_lines }}"
+
+
+    - name: Configure resolv file
+      copy: src="resolv.conf" dest="/etc"
+

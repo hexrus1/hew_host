@@ -1,0 +1,7 @@
+[zakupki-zabbix4.4-local]
+gpgcheck = 0
+priority = 1
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX
+baseurl = http://repo.zakupki.local/zabbix/zabbix4.4-LTS-rhel6/$basearch/
+name = EIS rhel 6 Local Repository - $basearch
+

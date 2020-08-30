@@ -1,0 +1,19 @@
+[zakupki_centos7_repo]
+name=EIS CentOS 7 Local Repository
+baseurl=http://repo/centos/7/os/x86_64/ 
+enabled=1
+gpgcheck=0
+
+[zakupki_centos7_updates_repo]
+name=EIS CentOS 7 Updates Local Repository
+baseurl=http://repo/centos/7/updates/x86_64/
+enabled=1
+gpgcheck=0
+
+[zakupki_epel7_repo]
+name=EIS EPEL 7 Local Repository
+baseurl=http://repo/epel/epel7
+enabled=1
+gpgcheck=0
+
+

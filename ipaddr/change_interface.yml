@@ -1,0 +1,35 @@
+---
+- lineinfile:
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ item }}
+    backup: no
+    regexp: "IPADDR=\"?10.141."
+    line: "IPADDR={{ ipaddrs }}"
+    state: present
+  check_mode: yes
+  register: presence
+
+- block:
+  - lineinfile:
+      dest: /etc/sysconfig/network-scripts/ifcfg-{{ item }}
+      backup: no
+      regexp: "IPADDR=\"?10.141."
+      line: "IPADDR={{ ipaddrs }}"
+      state: present
+
+  - lineinfile:
+      dest: /etc/sysconfig/network-scripts/ifcfg-{{ item }}
+      backup: no
+      regexp: "^GATEWAY="
+      line: "GATEWAY={{ gateway }}"
+      state: present
+
+  - lineinfile:
+      dest: /etc/sysconfig/network-scripts/ifcfg-{{ item }}
+      backup: no
+      regexp: "^PREFIX="
+      line: "PREFIX={{ prefix }}"
+      state: present
+  when:
+    - presence is changed
+
+

@@ -1,0 +1,5 @@
+---
+- lineinfile: 
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ item }}
+    state: absent 
+    regexp: '^DNS' 

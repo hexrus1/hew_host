@@ -1,0 +1,5 @@
+[zakupki_general_repo]
+name=EIS General Local Repository
+baseurl=http://repo/general/
+enabled=1
+gpgcheck=0

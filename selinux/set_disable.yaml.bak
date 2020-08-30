@@ -1,0 +1,33 @@
+---
+- name: Set selinux
+  hosts: all
+  serial: 0
+  remote_user: adm_onlanta
+  become: true
+  become_method: sudo
+
+  tasks:
+  - lineinfile:
+      dest: /etc/sysconfig/selinux
+      backup: no
+      regexp: "SELINUX="
+      line: "SELINUX=disabled"
+      state: present
+    check_mode: yes
+    register: presence
+
+  - block:
+    - lineinfile:
+        dest: /etc/sysconfig/selinux
+        backup: no
+        regexp: "SELINUX="
+        line: "SELINUX=disabled"
+        state: present
+    - name: Reboot a machine 
+      reboot:
+        reboot_timeout: 3600
+
+    when:
+      - presence is changed
+
+

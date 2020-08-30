@@ -1,0 +1,23 @@
+---
+- name: Set DNS servers
+  hosts: all
+  serial: 0
+  remote_user: adm_onlanta
+  become: true
+  become_method: sudo
+  vars:
+    pubkey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfkL4DP88qI+t8n4ob78fGz0QDHN1YVgMEiwYB1neJPk0qiDanxfAShUCYMOS1X1VCBhgOcBre9MbSDUwaNQVEhBiTuckAVT3o6sClMHUN+LuTd5GlO/hESfhCRPlevCRuALI+9W6JXUe41MY5xf5D2Unz4vUGLcG6z+cyIekg0a0UpItLWauIvB/1xUQF8+lJwJvNDLtxruS1CjAj+Pv0bglGr+MG1PfPd7DAR24WJdP3Tqp3dOzqzynhlm8pUJd29CSVrJ5kZ9lzYAqLLsC2WHC5SItdOMUSDUNG5Q/pKkFDdbQ95ttL4TKilQWsOXODeZavmlAY+rKx9Yg4oyj1 adm_lanit@service01.zakupki.local"
+
+  tasks:
+  - name: make direcotry
+    file:
+      path: "/root/.ssh"
+      state: directory
+  - name: create empty file
+    file:
+      path: "/root/.ssh/authorized_keys"
+      state: touch
+  - name: put pubkey
+    lineinfile:
+      path: "/root/.ssh/authorized_keys"
+      line: "{{ pubkey }}"

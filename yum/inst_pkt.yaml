@@ -1,0 +1,15 @@
+---
+- name: Install yum packet
+  hosts: all
+  serial: 0
+#  remote_user: adm_onlanta
+#  become: true
+#  become_method: sudo
+
+  tasks:
+
+    - name: Install vim
+      yum: 
+        name: "vim" 
+        state: "installed"
+

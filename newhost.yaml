@@ -1,0 +1,14 @@
+---
+
+#- include: selinux/set_disable.yaml
+#- include: dns/nslookup.yaml
+- include: repo/install_repos.files.yaml
+#- include: ntp/set_ntp.yaml
+#- include: mtu/set_mtu.yaml
+#- include: ipaddr/ifcfg.yaml
+#- include: ssh_key/ssh_copy_id.yaml
+#- include: check/query_dns.yaml
+#- include: check/query_repo.yaml
+#- include: check/query_ntpstat.yaml
+#- include: yum/inst_pkt.yaml
+#- include: vmtools/inst_pkt.yaml

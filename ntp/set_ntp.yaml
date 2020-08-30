@@ -1,0 +1,35 @@
+---
+- name: Set NTP servers
+  hosts: all
+  serial: 0
+#  remote_user: adm_onlanta
+#  become: true
+#  become_method: sudo
+
+  tasks:
+
+    - name: Install ntp
+      yum: 
+        name: "ntp" 
+        state: "installed"
+
+    - name: Configure ntp
+      copy: 
+        src: "ntp.conf" 
+        dest: "/etc"
+
+    - name: Check stopped
+      service: 
+        name: "ntpd" 
+        enabled: "yes" 
+        state: "stopped"
+
+    - name: Initial sync
+      shell: "ntpd -gq"
+
+    - name: Start ntp
+      service: 
+        name: "ntpd" 
+        enabled: "yes" 
+        state: "restarted"
+

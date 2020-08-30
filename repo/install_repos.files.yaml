@@ -1,0 +1,41 @@
+---
+- name: Test yum repolist output
+  hosts: all
+  serial: 0
+#  remote_user: adm_onlanta
+#  become: true
+#  become_method: sudo
+
+  tasks:
+
+  - block:
+      - name: Clear not zakupki repos
+        shell: " find /etc/yum.repos.d/ -type f -not -name '*zakupki*' -print0 | xargs -0  -I {} rm -v {}"
+
+#      - name: Coping repo files
+      - copy: src={{ item }} dest="/etc/yum.repos.d/"
+        with_items:
+          - "CentOS6/zakupki.centos6.repo"
+          - "CentOS6/zakupki.elastic.repo"
+          - "CentOS6/zakupki.general.repo.disabled"
+          - "CentOS6/zakupki-zabbix4.4-local.repo"
+    when:
+      - ansible_facts['distribution'] == "CentOS"
+      - ansible_facts['distribution_major_version'] == "6"
+
+  - block:
+      - name: Clear not zakupki repos
+        shell: " find /etc/yum.repos.d/ -type f -not -name '*zakupki*' -print0 | xargs -0  -I {} rm -v {}"
+
+#      - name: Coping repos files 
+      - copy: src={{ item }} dest="/etc/yum.repos.d/"
+        with_items:
+          - "CentOS7/zakupki.centos7.repo"
+          - "CentOS7/zakupki.elastic.repo"
+          - "CentOS7/zakupki.general.repo.disabled"
+          - "CentOS7/zakupki-zabbix4.4-local.repo"
+    when:
+      - ansible_facts['distribution'] == "CentOS"
+      - ansible_facts['distribution_major_version'] == "7"
+
+

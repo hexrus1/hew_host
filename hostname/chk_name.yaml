@@ -1,0 +1,46 @@
+---
+- name: Query hostname
+  hosts: all
+  serial: 0
+#  remote_user: adm_onlanta
+#  become: true
+#  become_method: sudo
+
+  tasks:
+
+    - name: Register hostname result
+      command: hostname
+      register: hostnamecmd
+
+    - block:
+        - lineinfile:
+            dest: /etc/sysconfig/network
+            backup: no
+            regexp: "^HOSTNAME="
+            line: "HOSTNAME={{ hostname_var }}"
+            state: present
+
+        - reboot:
+            reboot_timeout: 3600
+
+      when:
+        - hostnamecmd.stdout != hostname_var
+        - ansible_facts['distribution_major_version'] == "6"
+
+
+
+    - block:
+        - name: Edit file /etc/hostname
+          shell: /bin/echo {{ hostname_var }} > /etc/hostname
+        - reboot:
+            reboot_timeout: 3600
+
+      when:
+        - hostnamecmd.stdout != hostname_var
+        - ansible_facts['distribution_major_version'] == "7"
+
+
+
+
+#    - debug:
+#        msg: "{{ hostnamecmd.stdout | regex_search('^(' ~  hostname_var ~ ')') }}"
