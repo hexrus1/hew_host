@@ -1,4 +1,0 @@
-zproxy02.zakupki.local	ansible_host=10.140.96.50
-zproxy03.zakupki.local	ansible_host=10.140.96.51
-zproxy04.zakupki.local	ansible_host=10.140.96.52
-zproxy05.zakupki.local	ansible_host=10.140.96.53
