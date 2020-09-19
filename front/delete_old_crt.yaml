@@ -1,0 +1,19 @@
+---
+  - name: Change working dir for wildfly
+    hosts: all
+    serial: 1
+
+    tasks:
+      - name: Remove file
+        file:
+          path: "{{ item  }}"
+          state: absent
+        with_items:
+          - "/opt/TrustedTLS-3_Apache-2.4/conf/lk.zakupki.gov.ru-gost2001.cer"
+          - "/opt/TrustedTLS-3_Apache-2.4/conf/lk.zakupki.gov.ru-gost2001.key"
+          - "/opt/TrustedTLS-3_Apache-2.4/conf/crl/root-qual.cer"
+          - "/opt/TrustedTLS-3_Apache-2.4/conf/lk.zakupki.gov.ru-gost2012.cer"
+          - "/opt/TrustedTLS-3_Apache-2.4/conf/lk.zakupki.gov.ru-gost2012.key"
+
+      - name: Run sertificate discovery
+        shell: /usr/local/bin/certificate-discovery.sh process >/dev/null 2>&1

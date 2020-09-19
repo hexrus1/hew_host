@@ -1,7 +1,7 @@
 ---
 
 #- include: selinux/set_disable.yaml
-#- include: dns/nslookup.yaml
+- include: dns/nslookup.yaml
 #- include: repo/install_repos.files.yaml
 #- include: ntp/set_ntp.yaml
 #- include: mtu/set_mtu.yaml
@@ -12,4 +12,4 @@
 #- include: check/query_ntpstat.yaml
 #- include: yum/inst_pkt.yaml
 #- include: vmtools/inst_pkt.yaml
-- include: timezone/set_tmz.yaml
+#- include: timezone/set_tmz.yaml

@@ -1,0 +1,20 @@
+---
+- name: Set DNS servers
+  hosts: all
+  serial: 0
+#  remote_user: adm_onlanta
+#  become: true
+#  become_method: sudo
+
+  tasks:
+
+    - replace:
+        dest: /usr/local/zabbix/agent/scripts/check_resolv.sh
+        regexp: '10\.134\.33\.17'
+        replace: '10.141.86.8'
+
+    - replace:
+        dest: /usr/local/zabbix/agent/scripts/check_resolv.sh
+        regexp: '10\.134\.33\.18'
+        replace: '10.141.86.11'
+

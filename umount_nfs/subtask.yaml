@@ -1,0 +1,12 @@
+---
+- name: Unmount a mounted volume
+  mount:
+    path: "{{ item }}"
+    state: unmounted
+
+- name: Recursively remove directry
+  file:
+    path: "{{ item }}"
+    state: absent
+
+

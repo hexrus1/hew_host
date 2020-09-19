@@ -1,0 +1,46 @@
+---
+  - name: Change working dir for wildfly
+    hosts: all
+    serial: 1
+
+    tasks:
+
+      - name: upgrade kernel package
+        yum:
+          name: 'kernel'
+          state: latest
+
+      - name: Stop service sphinxagent
+        service:
+          name: sphinxagent
+          state: stopped
+        ignore_errors: True
+
+      - name: Stop service sphinx
+        service:
+          name: sphinx
+          state: stopped
+        ignore_errors: True
+
+      - name: Reboot a machine
+        reboot:
+          reboot_timeout: 3600
+
+      - name: Start service sphinx
+        service:
+          name: sphinx
+          state: started
+
+      - name: Start service sphinxagent
+        service:
+          name: sphinxagent
+          state: started
+        ignore_errors: True
+
+      - name: Waiting for start
+        shell: mysql -h 127.0.0.1 -P 9306 -e "SHOW STATUS like 'connections'"
+        register: result
+        until: "result.stdout.find('connections') != -1"
+        retries: 360
+        delay: 10
+

@@ -1,0 +1,21 @@
+---
+  - name: umount nfs dir from /etc/fstab
+    hosts: all
+    serial: 1
+
+    tasks:
+      - name: Get array items mounted disks
+        shell: cat /etc/fstab | grep nfs | awk '{print $2}'
+        register: fstab
+
+      - name: Unmount a mounted volume and delete the mount point
+        include_tasks: subtask.yaml
+        with_items:
+          - "{{ fstab.stdout_lines }}"
+
+      - name: Delete line
+        lineinfile:
+          path: /etc/fstab
+          state: absent
+          regexp: '^.*\snfs.*$'
+
